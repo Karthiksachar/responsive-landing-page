@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Landing Page</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>MyLogo</h1>
+    </div>
+    <nav>
+      <button class="mobile-nav-toggle" aria-controls="nav-links" aria-expanded="false">
+        <span class="sr-only">Menu</span>
+        <div class="hamburger"></div>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+        <li>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+            <span class="theme-toggle-icon">🌓</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h2>Welcome to Our Site</h2>
+          <p>We provide clean and responsive design solutions to grow your brand.</p>
+          <a href="#" class="cta-button">Get Started</a>
+        </div>
+        <div class="hero-image">
+          <!-- Using the action pose Deku image as the hero image -->
+          <img src="hero1.png" alt="Deku in action pose from My Hero Academia" class="hero-img anime-character action-pose">
+        </div>
+      </div>
+    </section>
+    
+    <section class="features">
+      <h2>Our Features</h2>
+      <div class="features-container">
+        <div class="feature-card">
+          <h3>Responsive Design</h3>
+          <p>Layouts that work on any device, any screen size.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Modern Look</h3>
+          <p>Clean and professional appearance for your brand.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Fast Performance</h3>
+          <p>Optimized code for quick loading times.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>MyLogo</h3>
+        <p>© 2025 MyWebsite. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h4>Connect With Us</h4>
+        <div class="socials">
+          <a href="#" aria-label="Facebook">Facebook</a>
+          <a href="#" aria-label="Twitter">Twitter</a>
+          <a href="#" aria-label="Instagram">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    document.querySelector('.mobile-nav-toggle').addEventListener('click', function() {
+      const navLinks = document.getElementById('nav-links');
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !isExpanded);
+      navLinks.classList.toggle('active');
+    });
+
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const navThemeToggle = document.getElementById('theme-toggle');
+      const floatingThemeToggle = document.getElementById('floating-theme-toggle');
+      const themeToggles = [navThemeToggle, floatingThemeToggle];
+      
+      // Check for saved theme preference or use device preference
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      // Apply the saved theme or device preference
+      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', initialTheme);
+      
+      // Update all toggle icons
+      themeToggles.forEach(toggle => {
+        if (toggle) {
+          toggle.querySelector('.theme-toggle-icon').textContent = initialTheme === 'dark' ? '🌞' : '🌙';
+        }
+      });
+      
+      // Function to toggle theme
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Update theme attribute
+        document.documentElement.setAttribute('data-theme', newTheme);
+        
+        // Update all toggle icons
+        themeToggles.forEach(toggle => {
+          if (toggle) {
+            toggle.querySelector('.theme-toggle-icon').textContent = newTheme === 'dark' ? '🌞' : '🌙';
+          }
+        });
+        
+        // Save preference
+        localStorage.setItem('theme', newTheme);
+      }
+      
+      // Add click event to both toggles
+      themeToggles.forEach(toggle => {
+        if (toggle) {
+          toggle.addEventListener('click', toggleTheme);
+        }
+      });
+    });
+  </script>
+  <!-- Floating theme toggle for mobile view -->
+  <button id="floating-theme-toggle" class="floating-theme-toggle" aria-label="Toggle dark mode">
+    <span class="theme-toggle-icon">🌓</span>
+  </button>
+</body>
+</html>
